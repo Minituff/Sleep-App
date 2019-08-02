@@ -31,14 +31,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_isSearching);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
@@ -94,6 +92,24 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xff1C2031),
+          unselectedItemColor: Color(0xff515A79),
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.blur_circular),
+              title: Container(),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.insert_chart),
+              title: Container(),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Container(),
+            ),
+          ],
         ),
       ),
     );
