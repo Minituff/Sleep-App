@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                               contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 11),
                               hintText: 'Search',
-                              hintStyle: TextStyle(color: Colors.white),
+                              hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(style: BorderStyle.none),
                                 borderRadius: BorderRadius.circular(15),
