@@ -13,10 +13,9 @@ class MyApp extends StatelessWidget {
         backgroundColor: Color(0xff121421),
         iconTheme: IconThemeData(color: Colors.white, size: 35),
         primaryTextTheme: TextTheme(
-          title: TextStyle(color: Colors.white, fontSize: 40),
-          subtitle: TextStyle(color: Colors.grey.withOpacity(0.5), fontSize: 16.5),
-          display1: TextStyle(color: Colors.white, fontSize: 22)
-        ),
+            title: TextStyle(color: Colors.white, fontSize: 40),
+            subtitle: TextStyle(color: Colors.grey.withOpacity(0.5), fontSize: 16.5),
+            display1: TextStyle(color: Colors.white, fontSize: 22)),
         accentTextTheme: TextTheme(subtitle: TextStyle(color: Color(0xff3D5DA4), fontSize: 16.5)),
         primarySwatch: Colors.blue,
       ),
@@ -97,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.centerLeft,
               ),
               SizedBox(height: 20),
-              Expanded(child: Container(child: GridList()))
+              Expanded(child: GridList())
             ],
           ),
         ),

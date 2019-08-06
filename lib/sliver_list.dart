@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:charts_flutter/flutter.dart' as charts;
+
 class GridList extends StatefulWidget {
   const GridList({Key key}) : super(key: key);
 
@@ -38,15 +40,74 @@ class _GridListState extends State<GridList> {
             ),
           ),
         ),
+        SliverToBoxAdapter(child: SizedBox(height: 15)),
+        
+        if (showingAll)
         SliverGrid.count(
+          childAspectRatio: 5 / 2.5,
+          crossAxisSpacing: 25,
+          mainAxisSpacing: 25,
+          crossAxisCount: 1,
+          children: <Widget>[
+            Recommendeds(
+              title: 'Calming Sounds',
+              colors: [Color(0xff09C18A), Color(0xff12D99C)],
+              icon: Icon(Icons.headset),
+            ),
+            Recommendeds(
+              title: 'Insomnia',
+              colors: [Color(0xffFD81AA), Color(0xffF67D62)],
+              icon: Icon(Icons.local_movies),
+            ),
+            Recommendeds(
+              title: 'For Children',
+              colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
+              icon: Icon(Icons.child_care),
+            ),
+            Recommendeds(
+              title: 'Tips for Sleeping',
+              colors: [Color(0xff4635F8), Color(0xff4D77ED)],
+              icon: Icon(Icons.query_builder),
+            ),
+          ],
+        ),
+        
+        if(!showingAll)
+        Categories(),
+        
+        SliverToBoxAdapter(
+          child: Container(
+            padding: EdgeInsets.only(top: 25, bottom: 0),
+            child: Text('Recent', style: Theme.of(context).primaryTextTheme.subtitle),
+          ),
+        ),
+        SliverToBoxAdapter(child: SizedBox(height: 15)),
+        SliverGrid.count(
+          childAspectRatio: 5 / 4,
           crossAxisSpacing: 15,
-          mainAxisSpacing: 0,
+          mainAxisSpacing: 15,
           crossAxisCount: 2,
           children: <Widget>[
             Recents(
               title: 'Calming Sounds',
+              colors: [Color(0xff09C18A), Color(0xff12D99C)],
               icon: Icon(Icons.headset),
-            )
+            ),
+            Recents(
+              title: 'Insomnia',
+              colors: [Color(0xffFD81AA), Color(0xffF67D62)],
+              icon: Icon(Icons.local_movies),
+            ),
+            Recents(
+              title: 'For Children',
+              colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
+              icon: Icon(Icons.child_care),
+            ),
+            Recents(
+              title: 'Tips for Sleeping',
+              colors: [Color(0xff4635F8), Color(0xff4D77ED)],
+              icon: Icon(Icons.query_builder),
+            ),
           ],
         )
         // SliverPadding(
@@ -70,35 +131,98 @@ class _GridListState extends State<GridList> {
 class Recents extends StatelessWidget {
   final Icon icon;
   final String title;
-  const Recents({Key key, this.title, this.icon}) : super(key: key);
+  final List<Color> colors;
+  const Recents({Key key, this.title, this.icon, this.colors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 15),
-      height: 70,
-      width: 50,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(20),
-        color: Colors.green,
+        gradient: LinearGradient(colors: colors),
       ),
-      child: Container(
-        padding: EdgeInsets.all(18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Wrap(
-              children: <Widget>[
-                Text(title, style: Theme.of(context).primaryTextTheme.display1),
-              ],
-            ),
-            icon
-          ],
+      child: Stack(children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            // color: Colors.red.withOpacity(0.5),
+          ),
+          child: Charts(),
         ),
-      ),
+        Container(
+          padding: EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Wrap(
+                children: <Widget>[
+                  Text(title, style: Theme.of(context).primaryTextTheme.display1),
+                ],
+              ),
+              icon
+            ],
+          ),
+        ),
+      ]),
     );
+  }
+}
+
+
+class Recommendeds extends StatelessWidget {
+  final Icon icon;
+  final String title;
+  final List<Color> colors;
+  const Recommendeds({Key key, this.title, this.icon, this.colors}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(colors: colors),
+      ),
+      child: Stack(children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            // color: Colors.red.withOpacity(0.5),
+          ),
+          child: Charts(),
+        ),
+        Container(
+          padding: EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Wrap(
+                children: <Widget>[
+                  Text(title, style: Theme.of(context).primaryTextTheme.display1),
+                ],
+              ),
+              icon
+            ],
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class Charts extends StatefulWidget {
+  Charts({Key key}) : super(key: key);
+
+  _ChartsState createState() => _ChartsState();
+}
+
+class _ChartsState extends State<Charts> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
