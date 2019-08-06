@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleep_app/sliver_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Color(0xff121421),
         iconTheme: IconThemeData(color: Colors.white, size: 35),
-        primaryTextTheme: TextTheme(title: TextStyle(color: Colors.white, fontSize: 40)),
+        primaryTextTheme: TextTheme(
+          title: TextStyle(color: Colors.white, fontSize: 40),
+          subtitle: TextStyle(color: Colors.grey.withOpacity(0.5), fontSize: 16.5),
+          display1: TextStyle(color: Colors.white, fontSize: 22)
+        ),
+        accentTextTheme: TextTheme(subtitle: TextStyle(color: Color(0xff3D5DA4), fontSize: 16.5)),
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
@@ -90,6 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.blue,
                 alignment: Alignment.centerLeft,
               ),
+              SizedBox(height: 20),
+              Expanded(child: Container(child: GridList()))
             ],
           ),
         ),
