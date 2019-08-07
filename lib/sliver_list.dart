@@ -47,44 +47,7 @@ class _GridListState extends State<GridList> {
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 15)),
-
-        if (!showingAll)
-          SliverGrid.count(
-            childAspectRatio: 5 / 2.5,
-            crossAxisSpacing: 25,
-            mainAxisSpacing: 25,
-            crossAxisCount: 1,
-            children: <Widget>[
-              Recommendeds(
-                title: 'Sleep Meditation',
-                description: '7 Day Audio Series',
-                colors: [Color(0xff09C18A), Color(0xff12D99C)],
-                icons: [Icon(Icons.headset), Icon(Icons.local_movies)],
-              ),
-              Recommendeds(
-                title: 'Insomnia Podcast',
-                description: 'How To Finally Get Some Sleep',
-                colors: [Color(0xffFD81AA), Color(0xffF67D62)],
-                icons: [Icon(Icons.local_movies)],
-              ),
-              Recommendeds(
-                title: 'Lucid Dreaming Audiobook',
-                description: 'Tips And Tricks For LD',
-                colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
-                icons: [Icon(Icons.child_care)],
-              ),
-              Recommendeds(
-                title: 'Dream Journals',
-                description: 'The secret to clearer sleep?',
-                colors: [Color(0xff4635F8), Color(0xff4D77ED)],
-                icons: [Icon(Icons.query_builder)],
-              ),
-            ],
-          ),
-
-        if (showingAll)
-          Categories(),
-
+        RecommendedSwitcher(showingAll: showingAll),
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(top: 25, bottom: 0),
@@ -134,6 +97,90 @@ class _GridListState extends State<GridList> {
         //   ),
         // ),
       ]),
+    );
+  }
+}
+
+class RecommendedSwitcher extends StatefulWidget {
+  final bool showingAll;
+  RecommendedSwitcher({Key key, @required this.showingAll}) : super(key: key);
+
+  _RecommendedSwitcherState createState() => _RecommendedSwitcherState();
+}
+
+class _RecommendedSwitcherState extends State<RecommendedSwitcher> {
+  List<Recommendeds> recommends = [
+    Recommendeds(
+      title: 'Sleep Meditation',
+      description: '7 Day Audio Series',
+      colors: [Color(0xff09C18A), Color(0xff12D99C)],
+      icons: [Icon(Icons.headset), Icon(Icons.local_movies)],
+    ),
+    Recommendeds(
+      title: 'Insomnia Podcast',
+      description: 'How To Finally Get Some Sleep',
+      colors: [Color(0xffFD81AA), Color(0xffF67D62)],
+      icons: [Icon(Icons.local_movies)],
+    ),
+    Recommendeds(
+      title: 'Lucid Dreaming Audiobook',
+      description: 'Tips And Tricks For LD',
+      colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
+      icons: [Icon(Icons.child_care)],
+    ),
+    Recommendeds(
+      title: 'Dream Journals',
+      description: 'The secret to clearer sleep?',
+      colors: [Color(0xff4635F8), Color(0xff4D77ED)],
+      icons: [Icon(Icons.query_builder)],
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.showingAll) {
+      return SliverGrid.count(
+        childAspectRatio: 5 / 2.5,
+        crossAxisSpacing: 25,
+        mainAxisSpacing: 25,
+        crossAxisCount: 1,
+        children: recommends,
+      );
+    }
+
+    return SliverToBoxAdapter(
+      child: Container(
+        height: 185.0,
+        child: ScrollConfiguration(
+          behavior: NoOverscrollBehavior(),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: recommends.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(right: 15),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: const Color(0x8034b0fc),
+                    onTap: () {},
+                    child: Container(
+                      width: 300,
+                      child: recommends[index],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
@@ -199,11 +246,9 @@ class Recommendeds extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Column(children: <Widget>[
-                Wrap(
-                  children: <Widget>[
-                    Text(title, style: Theme.of(context).primaryTextTheme.display1),
-                  ],
-                ),
+                Wrap(children: <Widget>[
+                  Text(title, style: Theme.of(context).primaryTextTheme.display1),
+                ]),
                 SizedBox(height: 3),
                 Text(description, style: Theme.of(context).primaryTextTheme.display2),
               ]),
@@ -308,12 +353,6 @@ class _ChartsState extends State<Charts> {
       ),
     );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
 }
 
 class Categories extends StatefulWidget {
