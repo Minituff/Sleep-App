@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:flutter_sparkline/flutter_sparkline.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:animator/animator.dart';
 
 class GridList extends StatefulWidget {
   const GridList({Key key}) : super(key: key);
@@ -41,40 +47,44 @@ class _GridListState extends State<GridList> {
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 15)),
-        
+
+        if (!showingAll)
+          SliverGrid.count(
+            childAspectRatio: 5 / 2.5,
+            crossAxisSpacing: 25,
+            mainAxisSpacing: 25,
+            crossAxisCount: 1,
+            children: <Widget>[
+              Recommendeds(
+                title: 'Sleep Meditation',
+                description: '7 Day Audio Series',
+                colors: [Color(0xff09C18A), Color(0xff12D99C)],
+                icons: [Icon(Icons.headset), Icon(Icons.local_movies)],
+              ),
+              Recommendeds(
+                title: 'Insomnia Podcast',
+                description: 'How To Finally Get Some Sleep',
+                colors: [Color(0xffFD81AA), Color(0xffF67D62)],
+                icons: [Icon(Icons.local_movies)],
+              ),
+              Recommendeds(
+                title: 'Lucid Dreaming Audiobook',
+                description: 'Tips And Tricks For LD',
+                colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
+                icons: [Icon(Icons.child_care)],
+              ),
+              Recommendeds(
+                title: 'Dream Journals',
+                description: 'The secret to clearer sleep?',
+                colors: [Color(0xff4635F8), Color(0xff4D77ED)],
+                icons: [Icon(Icons.query_builder)],
+              ),
+            ],
+          ),
+
         if (showingAll)
-        SliverGrid.count(
-          childAspectRatio: 5 / 2.5,
-          crossAxisSpacing: 25,
-          mainAxisSpacing: 25,
-          crossAxisCount: 1,
-          children: <Widget>[
-            Recommendeds(
-              title: 'Calming Sounds',
-              colors: [Color(0xff09C18A), Color(0xff12D99C)],
-              icon: Icon(Icons.headset),
-            ),
-            Recommendeds(
-              title: 'Insomnia',
-              colors: [Color(0xffFD81AA), Color(0xffF67D62)],
-              icon: Icon(Icons.local_movies),
-            ),
-            Recommendeds(
-              title: 'For Children',
-              colors: [Color(0xffF4BE25), Color(0xffFCCF3F)],
-              icon: Icon(Icons.child_care),
-            ),
-            Recommendeds(
-              title: 'Tips for Sleeping',
-              colors: [Color(0xff4635F8), Color(0xff4D77ED)],
-              icon: Icon(Icons.query_builder),
-            ),
-          ],
-        ),
-        
-        if(!showingAll)
-        Categories(),
-        
+          Categories(),
+
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(top: 25, bottom: 0),
@@ -143,13 +153,7 @@ class Recents extends StatelessWidget {
         gradient: LinearGradient(colors: colors),
       ),
       child: Stack(children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            // color: Colors.red.withOpacity(0.5),
-          ),
-          child: Charts(),
-        ),
+        Charts(),
         Container(
           padding: EdgeInsets.all(18),
           child: Column(
@@ -170,12 +174,12 @@ class Recents extends StatelessWidget {
   }
 }
 
-
 class Recommendeds extends StatelessWidget {
-  final Icon icon;
+  final List<Icon> icons;
   final String title;
+  final String description;
   final List<Color> colors;
-  const Recommendeds({Key key, this.title, this.icon, this.colors}) : super(key: key);
+  const Recommendeds({Key key, this.title, this.description, this.icons, this.colors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -186,25 +190,30 @@ class Recommendeds extends StatelessWidget {
         gradient: LinearGradient(colors: colors),
       ),
       child: Stack(children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            // color: Colors.red.withOpacity(0.5),
-          ),
-          child: Charts(),
-        ),
+        Charts(),
+        Charts(),
         Container(
           padding: EdgeInsets.all(18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Wrap(
-                children: <Widget>[
-                  Text(title, style: Theme.of(context).primaryTextTheme.display1),
-                ],
-              ),
-              icon
+              Column(children: <Widget>[
+                Wrap(
+                  children: <Widget>[
+                    Text(title, style: Theme.of(context).primaryTextTheme.display1),
+                  ],
+                ),
+                SizedBox(height: 3),
+                Text(description, style: Theme.of(context).primaryTextTheme.display2),
+              ]),
+              Container(
+                width: 85,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: icons,
+                ),
+              )
             ],
           ),
         ),
@@ -220,10 +229,91 @@ class Charts extends StatefulWidget {
 }
 
 class _ChartsState extends State<Charts> {
+  List<FlSpot> data = [];
+  List<int> upOrDown = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (double i = 1; i <= 7; i++) {
+      data.add(FlSpot(i, Random().nextDouble() * 8));
+      upOrDown.add(Random().nextInt(2));
+    }
+  }
+
+  List<Color> colors = [Colors.white.withOpacity(0.2)];
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Animator(
+          curve: Curves.ease,
+          repeats: 0,
+          tween: Tween<double>(begin: 0, end: 10),
+          duration: const Duration(seconds: 7),
+          builder: (anim) {
+            if (anim.value.round() == 10.0) {
+              upOrDown.clear();
+              for (double i = 1; i <= 7; i++) {
+                upOrDown.add(Random().nextInt(2));
+              }
+            }
+            int index = -1;
+            data = data.map((spot) {
+              index++;
+              if (upOrDown.elementAt(index) == 1) {
+                return FlSpot(spot.x, spot.y + 0.025);
+              } else {
+                return FlSpot(spot.x, spot.y - 0.025);
+              }
+            }).toList();
+
+            return FlChart(
+              chart: LineChart(
+                LineChartData(
+                  lineTouchData: const LineTouchData(enabled: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      colors: colors,
+                      spots: data,
+                      curveSmoothness: 0.50,
+                      isCurved: true,
+                      barWidth: 0,
+                      belowBarData: BelowBarData(show: true, colors: colors),
+                      dotData: const FlDotData(show: false),
+                    ),
+                  ],
+                  minY: 0,
+                  titlesData: const FlTitlesData(
+                    leftTitles: const SideTitles(
+                      showTitles: false,
+                    ),
+                    bottomTitles: const SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+                  gridData: const FlGridData(show: false),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
+}
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
 }
 
 class Categories extends StatefulWidget {
