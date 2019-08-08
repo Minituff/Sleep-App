@@ -15,8 +15,7 @@ class _ChartsState extends State<Charts> {
   List<int> upOrDown = [];
   final _random = new Random();
 
-
- // Generates a positive random integer from [min], inclusive, to [max], exclusive.
+  // Generates a positive random integer from [min], inclusive, to [max], exclusive.
   int next(int min, int max) => min + _random.nextInt(max - min);
 
   @override
@@ -61,33 +60,35 @@ class _ChartsState extends State<Charts> {
               }
             }).toList();
 
-            return FlChart(
-              chart: LineChart(
-                LineChartData(
-                  lineTouchData: const LineTouchData(enabled: false),
-                  lineBarsData: [
-                    LineChartBarData(
-                      colors: colors,
-                      spots: data,
-                      curveSmoothness: 0.50,
-                      isCurved: true,
-                      barWidth: 0,
-                      belowBarData: BelowBarData(show: true, colors: colors),
-                      dotData: const FlDotData(show: false),
+            return IgnorePointer(
+              child: FlChart(
+                chart: LineChart(
+                  LineChartData(
+                    lineTouchData: const LineTouchData(enabled: false),
+                    lineBarsData: [
+                      LineChartBarData(
+                        colors: colors,
+                        spots: data,
+                        curveSmoothness: 0.50,
+                        isCurved: true,
+                        barWidth: 0,
+                        belowBarData: BelowBarData(show: true, colors: colors),
+                        dotData: const FlDotData(show: false),
+                      ),
+                    ],
+                    minY: 0,
+                    titlesData: const FlTitlesData(
+                      leftTitles: const SideTitles(
+                        showTitles: false,
+                      ),
+                      bottomTitles: const SideTitles(
+                        showTitles: false,
+                      ),
                     ),
-                  ],
-                  minY: 0,
-                  titlesData: const FlTitlesData(
-                    leftTitles: const SideTitles(
-                      showTitles: false,
+                    gridData: const FlGridData(show: false),
+                    borderData: FlBorderData(
+                      show: false,
                     ),
-                    bottomTitles: const SideTitles(
-                      showTitles: false,
-                    ),
-                  ),
-                  gridData: const FlGridData(show: false),
-                  borderData: FlBorderData(
-                    show: false,
                   ),
                 ),
               ),

@@ -144,17 +144,9 @@ class _RecommendedSwitcherState extends State<RecommendedSwitcher> {
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(right: 15),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    splashColor: const Color(0x8034b0fc),
-                    onTap: () {},
-                    child: Container(
-                      width: 300,
-                      child: recommends[index],
-                    ),
-                  ),
+                child: Container(
+                  width: 300,
+                  child: recommends[index],
                 ),
               );
             },

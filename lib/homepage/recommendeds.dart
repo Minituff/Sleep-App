@@ -42,6 +42,18 @@ class Recommendeds extends StatelessWidget {
             ],
           ),
         ),
+        Container(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              child: InkWell(
+                highlightColor: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {},
+              ),
+            ),
+          ),
+        ),
       ]),
     );
   }
