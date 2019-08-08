@@ -28,7 +28,7 @@ class _ChartsState extends State<Charts> {
     }
   }
 
-  List<Color> colors = [Colors.white.withOpacity(0.2)];
+  List<Color> colors = [Colors.white.withOpacity(0.18),Colors.white.withOpacity(0.25)];
 
   @override
   Widget build(BuildContext context) {
