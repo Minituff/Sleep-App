@@ -19,13 +19,16 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  ScrollController _controller = ScrollController();
+  double offset = 0;
+
   Row makeIcons() {
     final List<Widget> icons = [];
     widget.icons.forEach((icon) {
       icons.add(
         Container(
-          margin: EdgeInsets.only(top: 20, right: 18),
-          padding: EdgeInsets.all(15),
+          margin: const EdgeInsets.only(top: 20, right: 18),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xff2B2B36)),
           child: icon,
         ),
@@ -37,43 +40,107 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   @override
+  void initState() {
+    _controller.addListener(_onscroll);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onscroll);
+    super.dispose();
+  }
+
+  void _onscroll() {
+    setState(() {
+      offset = _controller.offset;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Stack(children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+            child: ScrollConfiguration(
+              behavior: NoOverscrollBehavior(),
+              child: CustomScrollView(
+                controller: _controller,
+                slivers: <Widget>[
+                  SliverAppBar(
+                    pinned: true,
+                    titleSpacing: 0.0,
+                    elevation: 0.0,
+                    centerTitle: true,
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    expandedHeight: 100,
+                    title: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 150),
+                      curve: Curves.easeIn,
+                      opacity: offset >= 50 ? 1.0 : 0.0,
+                      child: FittedBox(child: Text(widget.title, style: Theme.of(context).primaryTextTheme.title)),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.favorite,
-                        color: Theme.of(context).iconTheme.color,
-                        size: Theme.of(context).iconTheme.size,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Container(
+                          padding: EdgeInsets.only(left: 25, right: 25, top: 50),
+                          child: Text(widget.title, style: Theme.of(context).primaryTextTheme.title)),
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: Theme.of(context).iconTheme.color,
+                          size: Theme.of(context).iconTheme.size,
+                        ),
+                        onPressed: () {},
+                      )
+                    ],
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 7),
+                          Text(widget.subtitle, style: const TextStyle(color: Colors.grey, fontSize: 18)),
+                          const SizedBox(height: 20),
+                          ImageSwiper(),
+                          makeIcons(),
+                          const SizedBox(height: 20),
+                          Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            height: 2,
+                            width: 35,
+                            color: Colors.blue,
+                            alignment: Alignment.centerLeft,
+                          ),
+                          const SizedBox(height: 20),
+                          Wrap(
+                            children: <Widget>[
+                              Text(
+                                'Nisi ex eiusmod et id minim consectetur mollit cillum incididunt cupidatat cillum deserunt. Id dolor adipisicing sunt eiusmod aliquip. Anim deserunt cupidatat commodo deserunt magna exercitation labore do labore commodo cupidatat. Excepteur velit incididunt laborum pariatur aliqua cupidatat.Sit nulla ad eiusmod ex tempor fugiat laborum. Quis aliquip sint esse qui eiusmod sit cupidatat est adipisicing. Ipsum adipisicing ea qui dolore cillum mollit commodo aute fugiat elit velit qui amet. Ea incididunt officia laboris consequat cupidatat.',
+                                style: TextStyle(color: Colors.grey, fontSize: 18),
+                              ),
+                              Text(
+                                'Nisi ex eiusmod et id minim consectetur mollit cillum incididunt cupidatat cillum deserunt. Id dolor adipisicing sunt eiusmod aliquip. Anim deserunt cupidatat commodo deserunt magna exercitation labore do labore commodo cupidatat. Excepteur velit incididunt laborum pariatur aliqua cupidatat.Sit nulla ad eiusmod ex tempor fugiat laborum. Quis aliquip sint esse qui eiusmod sit cupidatat est adipisicing. Ipsum adipisicing ea qui dolore cillum mollit commodo aute fugiat elit velit qui amet. Ea incididunt officia laboris consequat cupidatat.',
+                                style: TextStyle(color: Colors.grey, fontSize: 18),
+                              ),
+                              Text(
+                                'Nisi ex eiusmod et id minim consectetur mollit cillum incididunt cupidatat cillum deserunt. Id dolor adipisicing sunt eiusmod aliquip. Anim deserunt cupidatat commodo deserunt magna exercitation labore do labore commodo cupidatat. Excepteur velit incididunt laborum pariatur aliqua cupidatat.Sit nulla ad eiusmod ex tempor fugiat laborum. Quis aliquip sint esse qui eiusmod sit cupidatat est adipisicing. Ipsum adipisicing ea qui dolore cillum mollit commodo aute fugiat elit velit qui amet. Ea incididunt officia laboris consequat cupidatat.',
+                                style: TextStyle(color: Colors.grey, fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 90),
+                        ],
                       ),
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text(widget.title, style: Theme.of(context).primaryTextTheme.title),
-                SizedBox(height: 7),
-                Text(widget.subtitle, style: TextStyle(color: Colors.grey, fontSize: 18)),
-                SizedBox(height: 20),
-                ImageSwiper(),
-                makeIcons()
-              ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned.fill(
@@ -81,7 +148,7 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                  margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
                   decoration: BoxDecoration(
                     color: Color(0xff4A80F0),
                     borderRadius: BorderRadius.circular(15),
