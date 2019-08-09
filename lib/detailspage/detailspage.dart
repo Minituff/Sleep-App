@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleep_app/widgets.dart';
 
 class DetailsPage extends StatefulWidget {
   final String title;
@@ -18,6 +19,23 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  Row makeIcons() {
+    final List<Widget> icons = [];
+    widget.icons.forEach((icon) {
+      icons.add(
+        Container(
+          margin: EdgeInsets.only(top: 20, right: 18),
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xff2B2B36)),
+          child: icon,
+        ),
+      );
+    });
+    return Row(
+      children: icons,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,16 +70,55 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(height: 7),
               Text(widget.subtitle, style: TextStyle(color: Colors.grey, fontSize: 18)),
               SizedBox(height: 20),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/images/mountain1.jpg',
-                  // height: 500,
-                  // width: 300,
-                ),
-              )
+              ImageSwiper(),
+              makeIcons()
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ImageSwiper extends StatelessWidget {
+  const ImageSwiper({Key key}) : super(key: key);
+
+  final List<String> _imageURLs = const [
+    'assets/images/mountain1.jpg',
+    'assets/images/mountain2.jpg',
+    'assets/images/mountain1.jpg',
+    'assets/images/mountain2.jpg',
+  ];
+
+  List<Widget> makeImages() {
+    final List<Widget> images = [];
+    _imageURLs.forEach((image) {
+      images.add(ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          image,
+          height: 290,
+          width: 290,
+          fit: BoxFit.cover,
+        ),
+      ));
+      images.add(SizedBox(
+        width: 22,
+      ));
+    });
+
+    return images;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 290,
+      child: ScrollConfiguration(
+        behavior: NoOverscrollBehavior(),
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: makeImages(),
         ),
       ),
     );

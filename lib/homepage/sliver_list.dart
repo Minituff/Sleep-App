@@ -14,7 +14,7 @@ class GridList extends StatefulWidget {
 }
 
 class _GridListState extends State<GridList> {
-  bool showingAll = false;
+  bool _showingAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class _GridListState extends State<GridList> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      showingAll = !showingAll;
+                      _showingAll = !_showingAll;
                     });
                   },
                   child: Text(
-                    !showingAll ? 'Show All' : 'Show Less',
+                    !_showingAll ? 'Show All' : 'Show Less',
                     style: Theme.of(context).accentTextTheme.subtitle,
                   ),
                 ),
@@ -45,7 +45,7 @@ class _GridListState extends State<GridList> {
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 15)),
-        RecommendedSwitcher(showingAll: showingAll),
+        RecommendedSwitcher(showingAll: _showingAll),
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(top: 25, bottom: 0),
@@ -94,7 +94,7 @@ class RecommendedSwitcher extends StatefulWidget {
 }
 
 class _RecommendedSwitcherState extends State<RecommendedSwitcher> {
-  List<Recommendeds> recommends = [
+  List<Recommendeds> _recommends = [
     Recommendeds(
       title: 'Sleep Meditation',
       description: '7 Day Audio Series',
@@ -129,7 +129,7 @@ class _RecommendedSwitcherState extends State<RecommendedSwitcher> {
         crossAxisSpacing: 25,
         mainAxisSpacing: 25,
         crossAxisCount: 1,
-        children: recommends,
+        children: _recommends,
       );
     }
 
@@ -140,13 +140,13 @@ class _RecommendedSwitcherState extends State<RecommendedSwitcher> {
           behavior: NoOverscrollBehavior(),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: recommends.length,
+            itemCount: _recommends.length,
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(right: 15),
                 child: Container(
                   width: 300,
-                  child: recommends[index],
+                  child: _recommends[index],
                 ),
               );
             },
