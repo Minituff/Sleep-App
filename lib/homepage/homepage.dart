@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+          padding: EdgeInsets.only(left: 25, right: 25, top: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.centerLeft,
               ),
               SizedBox(height: 20),
-              Expanded(child: GridList())
+              Expanded(child: GridList()),
             ],
           ),
         ),

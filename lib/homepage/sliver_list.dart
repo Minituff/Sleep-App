@@ -80,7 +80,8 @@ class _GridListState extends State<GridList> {
               icon: Icon(Icons.query_builder),
             ),
           ],
-        )
+        ),
+        SliverToBoxAdapter(child: SizedBox(height: 20)),
       ]),
     );
   }
