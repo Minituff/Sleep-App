@@ -13,8 +13,10 @@ This is one of my earliest Flutter projects. I built this in an attempt to copy 
 Based on [this mock-up](https://dribbble.com/shots/6870298-Sleep-App)
 
 <img title="demo" src="media/based_on_1.png" width="800" height="600"/>
-<img title="demo" src="media/based_on_2.png" width="375" height="812"/>
-<img title="demo" src="media/based_on_3.png" width="375" height="812"/>
+<p float="left">
+  <img title="demo" src="media/based_on_2.png" width="375" height="812"/>
+  <img title="demo" src="media/based_on_3.png" width="375" height="812"/>
+</p>
 
 ## Notes
 
