@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: Theme.of(context).primaryTextTheme.title,
                     ),
                   AnimatedContainer(
-                    width: _isSearching ? 300 : 0,
+                    width: _isSearching ? 290 : 0,
                     duration: _isSearching ? Duration(milliseconds: 300) : Duration(seconds: 0),
                     curve: Curves.easeIn,
                     child: !_isSearching
