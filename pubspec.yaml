@@ -23,8 +23,8 @@ dependencies:
   # charts_flutter: ^0.6.0
   # flutter_sparkline: ^0.1.0
   # syncfusion_flutter_charts: ^1.0.0-beta.3
-  fl_chart: ^0.1.5
-  animator: ^0.1.4
+  fl_chart: 0.1.5
+  animator: 1.0.0+5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

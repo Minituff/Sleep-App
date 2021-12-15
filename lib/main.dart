@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Sleep App',
       theme: ThemeData(
         backgroundColor: Color(0xff121421),
@@ -25,5 +26,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
