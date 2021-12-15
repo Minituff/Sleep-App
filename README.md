@@ -20,4 +20,4 @@ Based on [this mock-up](https://dribbble.com/shots/6870298-Sleep-App)
 
 ## Notes
 
-It should be noted that this project is very old and outdated. Most of the Flutter code uses depracated sytax and methods. This project is not connected to a back-end and is UI only.
+It should be noted that this project is very old and outdated. Most of the Flutter code uses deprecated syntax and methods. This project is not connected to a back-end and is UI only.
